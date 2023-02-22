@@ -3,7 +3,7 @@
 ######################################################################
 # About:
 # indications2wav is a script designed to generate WAV files for tone
-# data found in the configuration file, indications.conf.
+# data found in Astrisk tone configuration file, indications.conf.
 # This script generates tones based on the tone definitions in the 
 # configuration file, and creates a WAV file for each tone.
 # The script allows for customized duration and audio sample rate for 
