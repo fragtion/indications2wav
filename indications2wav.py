@@ -10,6 +10,7 @@
 # the output WAV files.
 ######################################################################
 # Author: Dimitri Pappas (https://github.com/fragtion)
+# version 1.0
 # Release Date: 2023/02/22
 # License: MIT
 ######################################################################
