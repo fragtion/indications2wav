@@ -58,13 +58,10 @@ def generate_tones(filename, duration, sample_rate, output_dir):
         output_file = os.path.join(output_dir, section + "_" + key + ".wav")
         print("Creating " + output_file + "...")
         tonelist = value.split(",")
-        #print(value)
         samples = []
         s=0
         for tones in tonelist:
           samples.append([])
-          # Make space for the booleans
-          #samples.append([])
           # Set "tone should be played once only" to no by default
           samples[s].append(0)
           tones = tones.split("/")
@@ -79,16 +76,13 @@ def generate_tones(filename, duration, sample_rate, output_dir):
           t=2
           for tone in tones:
             samples[s].append([])
-            #print("tone: " + tone + " for duration: " + str(duration))
             frequency = int(tone.split("*")[0])
             modulation_frequency = int(tone.split("*")[1] if len(tone.split("*")) > 1 else 0)
-            #print("freq: " + str(frequency) + ", modulation: " + str(modulation_frequency) + ", duration: " + str(duration))
             samples[s][t] = generate_tone(frequency, modulation_frequency, 0.9, sample_rate, duration)
             t=t+1
           s=s+1
           # merge multiple tones into polyphonic tone
           if (len(samples[s-1]) > 3):
-            #print("polyphonic tone found")
             poly = zip(*samples[0][2:])
             sample_merged = []
             for sub_samples in poly:
@@ -96,22 +90,19 @@ def generate_tones(filename, duration, sample_rate, output_dir):
               sample_avg = sample_sum / len(sub_samples)
               sample_int = int(sample_avg)
               sample_merged.append(sample_int)
-            #print(str(sample_merged))
             samples[s-1] = samples[s-1][:2]
             samples[s-1].append([])
             samples[s-1][2] = sample_merged;
         # merge all tones into section sequence
         samples_mux = []
         while len(samples_mux) < max_samples:
-          #print(str(len(samples_mux)))
+          # append tone for remainder of duration
           for sample in samples:
-            if sample[0] == 1:
+            if sample[0] < 2:
               samples_mux.extend(sample[2:][0])
-              # Mark this tone as played
-              sample[0] = 2
-            else:
-              # append tone for remainder of duration
-              samples_mux.extend(sample[2:][0])
+              # Mark play-once tone as played
+              if sample[0] == 1:
+                sample[0] = 2
         samples_mux = samples_mux[:max_samples]
         # write the samples to a WAV file
         with wave.open(output_file, 'w') as wav_file:
