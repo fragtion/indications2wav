@@ -3,7 +3,7 @@
 `indications2wav` is a small, standalone Python3 script designed to generate WAV files for tone data found in Asterisk configuration file `indications.conf`.
 This script generates tones based on the tone definitions found in the configuration file, and creates a WAV file for each tone.
 The script allows for customized playback duration and audio sample rate, for the output WAV files.
-The script uses only built-in Python libraries, so getting it working should be a quick and simple process!
+The script uses only built-in Python libraries, so getting it working should be a breeze!
 
 ## Usage
 
